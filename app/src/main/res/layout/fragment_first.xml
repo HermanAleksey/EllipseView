@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="#000"
+    tools:context=".useless.FirstFragment">
+
+    <com.example.ellipseview.ellipse.EllipseImageView
+        android:id="@+id/ellipse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:useImageSource="true"
+        app:ellipseValue="150"
+        android:layout_marginHorizontal="30dp"
+        app:backgroundColorSource="#00F"
+        android:layout_marginBottom="100dp"/>
+
+    <com.example.ellipseview.GBSuperEllipseFrameView
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        app:cornerRounding="110"
+        app:shapeColor="#FF2D55">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToOutline="true"
+            android:src="@color/purple_700"
+            android:visibility="visible" />
+
+    </com.example.ellipseview.GBSuperEllipseFrameView>
+
+    <com.example.ellipseview.GBSuperEllipseFrameView
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        app:cornerRounding="20"
+        app:shapeColor="#FF2D55" />
+
+    <com.example.ellipseview.SuperEllipseView
+        android:layout_width="300dp"
+        android:layout_height="300dp" />
+
+
+</LinearLayout>

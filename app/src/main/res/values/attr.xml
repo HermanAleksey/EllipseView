@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="GBSuperEllipseView">
+        <attr name="shapeColor" format="color" />
+        <attr name="cornerRounding" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="SuperEllipseView">
+        <attr name="useImageSource" format="boolean"/>
+        <attr name="backgroundColorSource" format="color" />
+        <attr name="ellipseValue" format="integer" />
+        <attr name="sidesWithCorners" format="string" />
+    </declare-styleable>
+</resources>
