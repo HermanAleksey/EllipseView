@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatImageView
@@ -84,4 +85,15 @@ class EllipseImageView @JvmOverloads constructor(
         controller.setImage(drawableRes)
     }
 
+    /**
+     * Glide lib is using this method when setting image into view
+     * In order to cut angles when setting from glide - we have to interrupt it
+     * [isSetFromController] param prevents infinite recursion
+     * */
+    var isSetFromController: Boolean = false
+    override fun setImageDrawable(drawable: Drawable?) {
+        if (drawable != null && !isSetFromController) {
+            controller.setDrawableImage(drawable)
+        } else super.setImageDrawable(drawable)
+    }
 }

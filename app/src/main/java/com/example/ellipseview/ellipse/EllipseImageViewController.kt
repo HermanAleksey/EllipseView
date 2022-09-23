@@ -1,7 +1,8 @@
 package com.example.ellipseview.ellipse
 
 import android.graphics.*
-import com.example.ellipseview.R
+import android.graphics.drawable.Drawable
+import androidx.core.graphics.drawable.toBitmap
 import kotlin.math.*
 
 class EllipseImageViewController(
@@ -30,6 +31,13 @@ class EllipseImageViewController(
         setMaskToOriginSource(contentBitmap)
     }
 
+    fun setDrawableImage(drawable: Drawable) {
+        if (!view.useImageSource) return
+
+        val originSource = drawable.toBitmap(drawable.intrinsicWidth,drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        setMaskToOriginSource(originSource)
+    }
+
     private fun setMaskToOriginSource(contentBitmap: Bitmap) {
         //if view size is wrap_content or 0
         val viewWidth = if (view.width <= 1) contentBitmap.width else view.width
@@ -50,8 +58,12 @@ class EllipseImageViewController(
         }
 
         paint.xfermode = null
-        view.setImageBitmap(resultBitmap)
-        view.setBackgroundResource(R.color.trans)
+        view.apply {
+            isSetFromController = true
+            setImageBitmap(resultBitmap)
+            setBackgroundColor(Color.TRANSPARENT)
+            isSetFromController = false
+        }
     }
 
     private fun getBitmapMask(width: Int, height: Int, ellipseSize: Int): Bitmap {

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.ellipseview.R
+import com.bumptech.glide.Glide
 import com.example.ellipseview.databinding.FragmentFirstBinding
 
 /**
@@ -31,9 +31,10 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.ellipse.apply {
-            setImage(R.drawable.photo_test)
-        }
+
+        Glide.with(requireContext())
+            .load("https://www.techsmith.com/blog/wp-content/uploads/2020/11/TechSmith-Blog-JPGvsPNG.png")
+            .into(binding.ellipse)
     }
 
     override fun onDestroyView() {
