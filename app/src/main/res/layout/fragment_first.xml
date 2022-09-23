@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         app:useImageSource="true"
         app:ellipseValue="150"
+        app:sidesWithCorners="1,2"
         android:layout_marginHorizontal="30dp"
         app:backgroundColorSource="#00F"
         android:layout_marginBottom="100dp"/>

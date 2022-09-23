@@ -60,34 +60,10 @@ class EllipseImageViewController(
         }
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         Canvas(bitmap).apply {
-            //left top
-            drawSuperEllipse(
-                offsetLeft = ellipseSize,
-                offsetTop = ellipseSize,
-                size = ellipseSize,
-                paint = paint
-            )
-            //right top
-            drawSuperEllipse(
-                offsetLeft = width - ellipseSize,
-                offsetTop = ellipseSize,
-                size = ellipseSize,
-                paint = paint
-            )
-            //left bottom
-            drawSuperEllipse(
-                offsetLeft = ellipseSize,
-                offsetTop = height - ellipseSize,
-                size = ellipseSize,
-                paint = paint
-            )
-            //right bottom
-            drawSuperEllipse(
-                offsetLeft = width - ellipseSize,
-                offsetTop = height - ellipseSize,
-                size = ellipseSize,
-                paint = paint
-            )
+            drawTopLeftCorner(ellipseSize, paint)
+            drawTopRightCorner(width, ellipseSize, paint)
+            drawBottomLeftCorner(ellipseSize, height, paint)
+            drawBottomRightCorner(width, ellipseSize, height, paint)
             //horizontal rect
             drawRect(
                 0f,
@@ -107,34 +83,118 @@ class EllipseImageViewController(
         }
         return bitmap
     }
-}
 
-fun Canvas.drawSuperEllipse(offsetLeft: Int, offsetTop: Int, size: Int, paint: Paint) {
-    val path = Path()
-
-    //Has to be Double, integer type will break everything
-    val n: Double = 5.0
-    val na: Double = 2 / n
-
-    fun sgn(number: Double): Int =
-        when {
-            number > 0 -> 1
-            number < 0 -> -1
-            else -> 0
-        }
-
-    fun calculateX(angle: Double): Float =
-        (abs(cos(angle)).pow(na) * size * sgn(cos(angle))).toFloat() + offsetLeft
-
-    fun calculateY(angle: Double): Float =
-        (abs(sin(angle)).pow(na) * size * sgn(sin(angle))).toFloat() + offsetTop
-
-    path.moveTo(calculateX(0.0), calculateY(0.0))
-    var i = 0.0
-    while (i < PI * 2) {
-        path.lineTo(calculateX(i), calculateY(i))
-        i += 0.1
+    private fun Canvas.drawTopLeftCorner(
+        ellipseSize: Int,
+        paint: Paint,
+    ) {
+        if (sidesWithCorners.contains(EllipseImageView.Angle.TOP_LEFT))
+            drawSuperEllipse(
+                offsetLeft = ellipseSize,
+                offsetTop = ellipseSize,
+                size = ellipseSize,
+                paint = paint
+            )
+        else drawRect(
+            0F,
+            0F,
+            ellipseSize.toFloat(),
+            ellipseSize.toFloat(),
+            paint
+        )
     }
 
-    this.drawPath(path, paint)
+    private fun Canvas.drawTopRightCorner(
+        width: Int,
+        ellipseSize: Int,
+        paint: Paint,
+    ) {
+        if (sidesWithCorners.contains(EllipseImageView.Angle.TOP_RIGHT))
+            drawSuperEllipse(
+                offsetLeft = width - ellipseSize,
+                offsetTop = ellipseSize,
+                size = ellipseSize,
+                paint = paint
+            )
+        else drawRect(
+            (width - ellipseSize).toFloat(),
+            0F,
+            width.toFloat(),
+            ellipseSize.toFloat(),
+            paint
+        )
+    }
+
+    private fun Canvas.drawBottomLeftCorner(
+        ellipseSize: Int,
+        height: Int,
+        paint: Paint,
+    ) {
+        if (sidesWithCorners.contains(EllipseImageView.Angle.BOTTOM_LEFT))
+            drawSuperEllipse(
+                offsetLeft = ellipseSize,
+                offsetTop = height - ellipseSize,
+                size = ellipseSize,
+                paint = paint
+            )
+        else drawRect(
+            0F,
+            (height - ellipseSize).toFloat(),
+            ellipseSize.toFloat(),
+            height.toFloat(),
+            paint
+        )
+    }
+
+    private fun Canvas.drawBottomRightCorner(
+        width: Int,
+        ellipseSize: Int,
+        height: Int,
+        paint: Paint,
+    ) {
+        if (sidesWithCorners.contains(EllipseImageView.Angle.BOTTOM_RIGHT))
+            drawSuperEllipse(
+                offsetLeft = width - ellipseSize,
+                offsetTop = height - ellipseSize,
+                size = ellipseSize,
+                paint = paint
+            )
+        else drawRect(
+            (width - ellipseSize).toFloat(),
+            (height - ellipseSize).toFloat(),
+            width.toFloat(),
+            height.toFloat(),
+            paint
+        )
+    }
+
+    private fun Canvas.drawSuperEllipse(offsetLeft: Int, offsetTop: Int, size: Int, paint: Paint) {
+        val path = Path()
+
+        //Has to be Double, integer type will break everything
+        val n: Double = 5.0
+        val na: Double = 2 / n
+
+        fun sgn(number: Double): Int =
+            when {
+                number > 0 -> 1
+                number < 0 -> -1
+                else -> 0
+            }
+
+        fun calculateX(angle: Double): Float =
+            (abs(cos(angle)).pow(na) * size * sgn(cos(angle))).toFloat() + offsetLeft
+
+        fun calculateY(angle: Double): Float =
+            (abs(sin(angle)).pow(na) * size * sgn(sin(angle))).toFloat() + offsetTop
+
+        path.moveTo(calculateX(0.0), calculateY(0.0))
+        var i = 0.0
+        while (i < PI * 2) {
+            path.lineTo(calculateX(i), calculateY(i))
+            i += 0.1
+        }
+
+        this.drawPath(path, paint)
+    }
 }
