@@ -1,4 +1,4 @@
-package com.example.ellipseview
+package com.example.ellipseview.useless
 
 import android.content.Context
 import android.graphics.Canvas

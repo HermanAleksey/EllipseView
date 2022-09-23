@@ -168,6 +168,7 @@ class EllipseImageViewController(
         )
     }
 
+    //Optimisation: can only draw the corresponding side using the angle values in the loop. (from 0 to 90 etc.)
     private fun Canvas.drawSuperEllipse(offsetLeft: Int, offsetTop: Int, size: Int, paint: Paint) {
         val path = Path()
 

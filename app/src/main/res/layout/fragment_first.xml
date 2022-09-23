@@ -41,7 +41,7 @@
         app:cornerRounding="20"
         app:shapeColor="#FF2D55" />
 
-    <com.example.ellipseview.SuperEllipseView
+    <com.example.ellipseview.useless.SuperEllipseView
         android:layout_width="300dp"
         android:layout_height="300dp" />
 
